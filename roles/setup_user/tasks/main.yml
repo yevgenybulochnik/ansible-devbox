@@ -40,3 +40,10 @@
   become: True
   become_user: "{{ username }}"
   when: install_dotfiles is defined
+
+- name: Create workspace dir
+  file:
+    path: "/home/{{ username }}/workspace"
+    state: directory
+  become: yes
+  become_user: "{{ username }}"
