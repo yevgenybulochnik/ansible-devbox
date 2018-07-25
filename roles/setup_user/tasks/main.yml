@@ -47,3 +47,20 @@
     state: directory
   become: yes
   become_user: "{{ username }}"
+
+- name: Create .ssh dir
+  file:
+    path: "/home/{{ username }}/.ssh"
+    state: directory
+  become: yes
+  become_user: "{{ username }}"
+
+- name: Add keyfiles keys
+  copy:
+    src: "{{ item }}"
+    dest: "/home/{{ username }}/.ssh/{{ item | basename }}"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: 0400
+  with_fileglob:
+    - "../../keyfiles/*"

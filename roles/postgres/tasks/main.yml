@@ -1,0 +1,21 @@
+- name: Install Postgres
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+    - postgresql
+    - postgresql-contrib
+    - libpq-dev
+
+- name: Install psycopg2
+  pip:
+    name: psycopg2
+
+- name: Set postgres user password
+  postgresql_user:
+    db: postgres
+    user: postgres
+    password: "postgres"
+  become: True
+  become_user: postgres

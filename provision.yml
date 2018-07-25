@@ -12,6 +12,7 @@
       - vim
       - ansible
       - python3.6
+      - python3-pip
       - htop
     domain: yevgenybulochnik.com
     ssl_cert: self_signed
@@ -21,3 +22,4 @@
     - setup_user
     - gotty
     - apache
+    - postgres
