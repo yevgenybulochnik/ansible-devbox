@@ -1,0 +1,31 @@
+- name: Install virtualenv
+  pip:
+    name: virtualenv
+
+- name: Create pyEnv dir
+  file:
+    path: "/home/{{ username }}/pyEnvs"
+    state: directory
+  become: yes
+  become_user: "{{ username }}"
+
+- name: Create virtual environments
+  shell: "virtualenv --python=/usr/bin/python3.6 ./{{ item }}"
+  args:
+    chdir: "/home/{{ username }}/pyEnvs"
+    creates: "/home/{{ username }}/pyEnvs/{{ item }}/bin/activate"
+  become: yes
+  become_user: "{{ username }}"
+  with_items:
+    - dataAnalysis
+    - testing
+
+- name: Install modules for dataAnalysis
+  pip:
+    name: "{{ item }}"
+    virtualenv: "/home/{{ username }}/pyEnvs/dataAnalysis"
+  with_items:
+    - pandas
+    - jupyter
+    - jupyterlab
+    - matplotlib
