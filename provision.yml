@@ -22,5 +22,6 @@
     - setup_user
     - gotty
     - apache
+    - fail2ban
     - postgres
     - pythonEnvs
