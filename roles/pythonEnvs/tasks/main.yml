@@ -24,6 +24,8 @@
   pip:
     name: "{{ item }}"
     virtualenv: "/home/{{ username }}/pyEnvs/dataAnalysis"
+  become: yes
+  become_user: "{{ username }}"
   with_items:
     - pandas
     - jupyter
