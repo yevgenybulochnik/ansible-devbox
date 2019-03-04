@@ -6,12 +6,12 @@
     install_dotfiles: True
     PPAS:
       - ppa:jonathonf/vim
-      - ppa:jonathonf/python-3.6
+      - ppa:jonathonf/python-3.7
       - ppa:ansible/ansible
     packages:
       - vim
       - ansible
-      - python3.6
+      - python3.7
       - python3-pip
       - htop
     domain: yevgenybulochnik.com

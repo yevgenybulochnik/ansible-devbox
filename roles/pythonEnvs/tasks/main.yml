@@ -10,7 +10,7 @@
   become_user: "{{ username }}"
 
 - name: Create virtual environments
-  shell: "virtualenv --python=/usr/bin/python3.6 ./{{ item }}"
+  shell: "virtualenv --python=/usr/bin/python3.7 ./{{ item }}"
   args:
     chdir: "/home/{{ username }}/pyEnvs"
     creates: "/home/{{ username }}/pyEnvs/{{ item }}/bin/activate"
