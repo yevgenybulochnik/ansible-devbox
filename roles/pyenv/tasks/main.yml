@@ -1,0 +1,50 @@
+---
+- name: "Install python build deps"
+  apt:
+    name: "{{ build_deps }}"
+    state: latest
+    update_cache: yes
+  vars:
+    build_deps:
+      - make
+      - build-essential
+      - libssl-dev
+      - zlib1g-dev
+      - libbz2-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - wget
+      - curl
+      - llvm
+      - libncurses5-dev
+      - libncursesw5-dev
+      - xz-utils
+      - tk-dev
+      - libffi-dev
+      - liblzma-dev
+      - python-openssl
+      - git
+
+- name: "Get pyenv git repo"
+  git:
+    repo: "https://github.com/pyenv/pyenv.git"
+    version: master
+    dest: "/home/{{ username }}/.pyenv"
+  become: yes
+  become_user: "{{ username }}"
+
+- name: "Check for .zshrc"
+  stat:
+    path: "/home/{{ username }}/.zshrc"
+  register: zshrc_enabled
+
+- name: "Setup pyenv for zsh"
+  shell: |
+    echo 'export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    ' >> '/home/{{ username }}/.zshrc'
+  when: zshrc_enabled.stat.exists
+
+- name: "Setup pyenv init"
+  shell: echo 'if command -v pyenv 1>/dev/null 2>&1; then\n eval "$(pyenv init -)"\nfi' >> '/home/{{ username }}/.zshrc'
+  when: zshrc_enabled.stat.exists
